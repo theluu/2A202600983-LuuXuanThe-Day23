@@ -1,0 +1,67 @@
+{
+  "orders": [
+    {
+      "order_id": "12345",
+      "customer_id": "C-1001",
+      "customer_name": "Nguyen Minh Anh",
+      "email": "minh.anh@example.com",
+      "status": "shipped",
+      "carrier": "VNPost",
+      "tracking_number": "VN12345SGN",
+      "estimated_delivery": "2026-07-02",
+      "total_usd": 129.9,
+      "last_update": "2026-06-28T15:20:00+07:00"
+    },
+    {
+      "order_id": "999",
+      "customer_id": "C-1002",
+      "customer_name": "Tran Bao Chau",
+      "email": "bao.chau@example.com",
+      "status": "processing",
+      "carrier": null,
+      "tracking_number": null,
+      "estimated_delivery": "2026-07-05",
+      "total_usd": 84.5,
+      "last_update": "2026-06-29T09:10:00+07:00"
+    }
+  ],
+  "customers": [
+    {
+      "customer_id": "C-1001",
+      "name": "Nguyen Minh Anh",
+      "email": "minh.anh@example.com",
+      "account_status": "active",
+      "support_verified": true,
+      "last_ticket_id": "T-7781"
+    },
+    {
+      "customer_id": "C-2007",
+      "name": "Le Hoang Nam",
+      "email": "hoang.nam@example.com",
+      "account_status": "active",
+      "support_verified": true,
+      "last_ticket_id": "T-7794"
+    }
+  ],
+  "incidents": [
+    {
+      "incident_id": "INC-2026-0629-01",
+      "title": "Payment gateway timeout",
+      "status": "recovering",
+      "recover_after_attempts": 2,
+      "last_update": "2026-06-29T10:15:00+07:00"
+    }
+  ],
+  "policies": [
+    {
+      "policy_id": "P-RESET-001",
+      "topic": "password reset",
+      "summary": "Users can reset passwords from the sign-in page. Support should never ask for the current password."
+    },
+    {
+      "policy_id": "P-RISK-001",
+      "topic": "risky action approval",
+      "summary": "Refunds, account deletion, outbound confirmation emails, and cancellations require human approval."
+    }
+  ]
+}

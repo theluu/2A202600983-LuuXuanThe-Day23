@@ -79,12 +79,16 @@ configured checkpointer. The default config uses in-memory checkpoints for tests
 
 ## 8. Extension work
 
+Local support-data tooling is implemented in `data/support_records.json` and
+`src/langgraph_agent_lab/tools.py`. Tool calls now read real local order, customer,
+incident, policy, and approval data instead of returning generic mock strings.
 SQLite checkpoint support is implemented in `persistence.py` with WAL mode and setup.
 The graph diagram bonus is also exported as Mermaid evidence at `outputs/graph.mmd`
 using `python -m langgraph_agent_lab.cli export-graph --output outputs/graph.mmd`.
 A Streamlit UI bonus is implemented in `app.py`; run it with
 `streamlit run app.py --server.address 127.0.0.1 --server.port 8501` to submit queries,
-choose approval/rejection for risky actions, and inspect route traces/tool results.
+choose approval/rejection for risky actions, inspect route traces/tool results, and run
+the full sample test suite from the UI.
 
 ## 9. Improvement plan
 

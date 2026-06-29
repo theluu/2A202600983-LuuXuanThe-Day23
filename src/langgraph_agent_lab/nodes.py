@@ -5,7 +5,8 @@ from __future__ import annotations
 from pydantic import BaseModel, Field
 
 from .llm import get_llm
-from .state import AgentState, Route, make_event
+from .state import AgentState, make_event
+from .tools import execute_support_tool
 
 
 class Classification(BaseModel):
@@ -53,14 +54,8 @@ def intake_node(state: AgentState) -> dict:
     }
 
 def tool_node(state: AgentState) -> dict:
-    """Mock tool with error simulation for testing retries."""
-    attempt = state.get("attempt", 0)
-    route = state.get("route", "")
-    
-    if route == Route.ERROR.value and attempt < 2:
-        result = f"ERROR: Transient failure on attempt {attempt+1}"
-    else:
-        result = f"Tool success for query: {state['query'][:50]}..."
+    """Execute the local support-data tool."""
+    result = execute_support_tool(state)
     
     return {
         "tool_results": [result],

@@ -505,6 +505,7 @@
         <div class="check"><b>✓</b><span>Retry loop có giới hạn, tránh vòng lặp vô hạn.</span></div>
         <div class="check"><b>✓</b><span>HITL approval path cho các hành động risky.</span></div>
         <div class="check"><b>✓</b><span>Metrics JSON, report markdown và HTML summary cho người đọc non-tech.</span></div>
+        <div class="check"><b>✓</b><span>Local real data backend: orders, customers, incidents, policies and approvals.</span></div>
         <div class="check"><b>✓</b><span>Bonus: SQLite checkpoint, Mermaid graph export, Streamlit UI.</span></div>
       </div>
     </section>
@@ -514,18 +515,18 @@
       <div class="grid cols-3">
         <div class="metric">
           <div class="label">Bonus 1</div>
+          <div class="value">Real data</div>
+          <div class="note">Tool đọc <code>data/support_records.json</code>.</div>
+        </div>
+        <div class="metric">
+          <div class="label">Bonus 2</div>
           <div class="value">SQLite</div>
           <div class="note">Checkpoint có thể lưu vào database SQLite.</div>
         </div>
         <div class="metric">
-          <div class="label">Bonus 2</div>
-          <div class="value">Diagram</div>
-          <div class="note">Graph Mermaid export ở <code>outputs/graph.mmd</code>.</div>
-        </div>
-        <div class="metric">
           <div class="label">Bonus 3</div>
-          <div class="value">UI</div>
-          <div class="note">Streamlit UI chạy ở <code>http://127.0.0.1:8501</code>.</div>
+          <div class="value">UI + tests</div>
+          <div class="note">Streamlit UI có tab chạy toàn bộ tình huống.</div>
         </div>
       </div>
     </section>
@@ -533,6 +534,14 @@
     <section class="section">
       <h2>7. Báo cáo, log và file evidence nằm ở đâu?</h2>
       <div class="file-list">
+        <div class="file-row">
+          <strong><code>data/support_records.json</code></strong>
+          <span>Dataset local thật: orders, customers, incidents, policies dùng bởi tool.</span>
+        </div>
+        <div class="file-row">
+          <strong><code>src/langgraph_agent_lab/tools.py</code></strong>
+          <span>Tool adapter đọc dataset local và trả kết quả lookup/action/retry thật.</span>
+        </div>
         <div class="file-row">
           <strong><code>outputs/metrics.json</code></strong>
           <span>Dữ liệu thống kê test: success rate, retries, approvals, route từng scenario.</span>
@@ -574,6 +583,7 @@ python -m langgraph_agent_lab.cli validate-metrics --metrics outputs/metrics.jso
           <h3>Chạy UI</h3>
           <pre>streamlit run app.py --server.address 127.0.0.1 --server.port 8501</pre>
           <p>Sau đó mở <code>http://127.0.0.1:8501</code> trong trình duyệt.</p>
+          <p>Trong UI, mở tab <code>All test scenarios</code> để chạy đủ bộ tình huống.</p>
         </div>
       </div>
     </section>
