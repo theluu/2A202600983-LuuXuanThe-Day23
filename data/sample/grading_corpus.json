@@ -1,0 +1,27 @@
+[
+  {
+    "doc_id": "policy_refund_v4",
+    "title": "Refund Policy v4",
+    "content": "Chính sách hoàn tiền hiện hành cho phép khách hàng gửi yêu cầu hoàn tiền tối đa 7 ngày làm việc sau khi đơn được xác nhận. Các sản phẩm bị loại khỏi điều kiện hoàn tiền gồm hàng kỹ thuật số, license key và subscription. Finance Team xử lý yêu cầu hoàn tiền trong 3-5 ngày làm việc sau khi hồ sơ hợp lệ."
+  },
+  {
+    "doc_id": "sla_p1_2026",
+    "title": "P1 Support SLA 2026",
+    "content": "Ticket P1 có SLA phản hồi ban đầu là 15 phút. SLA resolution cho ticket P1 là 4 giờ. Nếu không có phản hồi với ticket P1 sau 10 phút thì hệ thống auto escalate cho on-call manager."
+  },
+  {
+    "doc_id": "it_helpdesk_faq",
+    "title": "IT Helpdesk FAQ",
+    "content": "Tài khoản bị khóa sau 5 lần đăng nhập sai liên tiếp. VPN cho phép kết nối tối đa 2 thiết bị cùng lúc cho mỗi nhân viên. Người dùng cần liên hệ Helpdesk để mở khóa tài khoản sau khi xác minh danh tính."
+  },
+  {
+    "doc_id": "hr_leave_policy",
+    "title": "HR Leave Policy 2026",
+    "content": "Theo chính sách HR 2026, nhân viên dưới 3 năm kinh nghiệm được 12 ngày phép năm. Nhân viên từ 3 năm kinh nghiệm trở lên được 15 ngày phép năm. Bản HR 2025 cũ không còn được áp dụng cho tính phép năm hiện hành."
+  },
+  {
+    "doc_id": "access_control_sop",
+    "title": "Access Control SOP",
+    "content": "Level 4 Admin Access yêu cầu phê duyệt bởi IT Manager và CISO trước khi cấp quyền. Mọi yêu cầu Level 4 phải ghi rõ business justification, thời hạn truy cập và ticket audit."
+  }
+]

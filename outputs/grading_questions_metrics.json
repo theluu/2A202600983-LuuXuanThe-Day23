@@ -1,0 +1,118 @@
+{
+  "total_questions": 10,
+  "success_rate": 1.0,
+  "top1_accuracy": 1.0,
+  "required_answer_rate": 1.0,
+  "results": [
+    {
+      "id": "gq_d10_01",
+      "question": "Theo chính sách hoàn tiền hiện hành, khách hàng có tối đa bao nhiêu ngày làm việc để gửi yêu cầu hoàn tiền sau khi đơn được xác nhận?",
+      "answer": "Chính sách hoàn tiền hiện hành cho phép khách hàng gửi yêu cầu hoàn tiền tối đa 7 ngày làm việc sau khi đơn được xác nhận. (Nguồn: policy_refund_v4)",
+      "expected_top1_doc_id": "policy_refund_v4",
+      "actual_top1_doc_id": "policy_refund_v4",
+      "top1_match": true,
+      "contains_required": true,
+      "violates_forbidden": false,
+      "success": true
+    },
+    {
+      "id": "gq_d10_02",
+      "question": "Đâu là loại sản phẩm bị loại khỏi điều kiện hoàn tiền?",
+      "answer": "Các sản phẩm bị loại khỏi điều kiện hoàn tiền gồm hàng kỹ thuật số, license key và subscription. (Nguồn: policy_refund_v4)",
+      "expected_top1_doc_id": "policy_refund_v4",
+      "actual_top1_doc_id": "policy_refund_v4",
+      "top1_match": true,
+      "contains_required": true,
+      "violates_forbidden": false,
+      "success": true
+    },
+    {
+      "id": "gq_d10_03",
+      "question": "Finance Team xử lý yêu cầu hoàn tiền trong bao lâu?",
+      "answer": "Finance Team xử lý yêu cầu hoàn tiền trong 3-5 ngày làm việc sau khi hồ sơ hợp lệ. (Nguồn: policy_refund_v4)",
+      "expected_top1_doc_id": "policy_refund_v4",
+      "actual_top1_doc_id": "policy_refund_v4",
+      "top1_match": true,
+      "contains_required": true,
+      "violates_forbidden": false,
+      "success": true
+    },
+    {
+      "id": "gq_d10_04",
+      "question": "SLA phản hồi ban đầu cho ticket P1 là bao lâu?",
+      "answer": "Ticket P1 có SLA phản hồi ban đầu là 15 phút. (Nguồn: sla_p1_2026)",
+      "expected_top1_doc_id": "sla_p1_2026",
+      "actual_top1_doc_id": "sla_p1_2026",
+      "top1_match": true,
+      "contains_required": true,
+      "violates_forbidden": false,
+      "success": true
+    },
+    {
+      "id": "gq_d10_05",
+      "question": "SLA resolution cho ticket P1 là bao nhiêu giờ?",
+      "answer": "SLA resolution cho ticket P1 là 4 giờ. (Nguồn: sla_p1_2026)",
+      "expected_top1_doc_id": "sla_p1_2026",
+      "actual_top1_doc_id": "sla_p1_2026",
+      "top1_match": true,
+      "contains_required": true,
+      "violates_forbidden": false,
+      "success": true
+    },
+    {
+      "id": "gq_d10_06",
+      "question": "Nếu không có phản hồi với ticket P1 sau bao lâu thì hệ thống auto escalate?",
+      "answer": "Nếu không có phản hồi với ticket P1 sau 10 phút thì hệ thống auto escalate cho on-call manager. (Nguồn: sla_p1_2026)",
+      "expected_top1_doc_id": "sla_p1_2026",
+      "actual_top1_doc_id": "sla_p1_2026",
+      "top1_match": true,
+      "contains_required": true,
+      "violates_forbidden": false,
+      "success": true
+    },
+    {
+      "id": "gq_d10_07",
+      "question": "Tài khoản bị khóa sau bao nhiêu lần đăng nhập sai liên tiếp?",
+      "answer": "Tài khoản bị khóa sau 5 lần đăng nhập sai liên tiếp. (Nguồn: it_helpdesk_faq)",
+      "expected_top1_doc_id": "it_helpdesk_faq",
+      "actual_top1_doc_id": "it_helpdesk_faq",
+      "top1_match": true,
+      "contains_required": true,
+      "violates_forbidden": false,
+      "success": true
+    },
+    {
+      "id": "gq_d10_08",
+      "question": "VPN cho phép kết nối tối đa bao nhiêu thiết bị cùng lúc?",
+      "answer": "VPN cho phép kết nối tối đa 2 thiết bị cùng lúc cho mỗi nhân viên. (Nguồn: it_helpdesk_faq)",
+      "expected_top1_doc_id": "it_helpdesk_faq",
+      "actual_top1_doc_id": "it_helpdesk_faq",
+      "top1_match": true,
+      "contains_required": true,
+      "violates_forbidden": false,
+      "success": true
+    },
+    {
+      "id": "gq_d10_09",
+      "question": "Nhân viên dưới 3 năm kinh nghiệm được bao nhiêu ngày phép năm theo chính sách HR 2026?",
+      "answer": "Theo chính sách HR 2026, nhân viên dưới 3 năm kinh nghiệm được 12 ngày phép năm. (Nguồn: hr_leave_policy)",
+      "expected_top1_doc_id": "hr_leave_policy",
+      "actual_top1_doc_id": "hr_leave_policy",
+      "top1_match": true,
+      "contains_required": true,
+      "violates_forbidden": false,
+      "success": true
+    },
+    {
+      "id": "gq_d10_10",
+      "question": "Level 4 Admin Access yêu cầu phê duyệt bởi ai?",
+      "answer": "Level 4 Admin Access yêu cầu phê duyệt bởi IT Manager và CISO trước khi cấp quyền. (Nguồn: access_control_sop)",
+      "expected_top1_doc_id": "access_control_sop",
+      "actual_top1_doc_id": "access_control_sop",
+      "top1_match": true,
+      "contains_required": true,
+      "violates_forbidden": false,
+      "success": true
+    }
+  ]
+}

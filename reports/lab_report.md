@@ -89,6 +89,9 @@ A Streamlit UI bonus is implemented in `app.py`; run it with
 `streamlit run app.py --server.address 127.0.0.1 --server.port 8501` to submit queries,
 choose approval/rejection for risky actions, inspect route traces/tool results, and run
 the full sample test suite from the UI.
+The mock grading question set in `data/sample/grading_questions.json` is evaluated against
+`data/sample/grading_corpus.json`. Results are rendered to
+`outputs/grading_questions_metrics.json` and `reports/grading_questions_report.md`.
 
 ## 9. Improvement plan
 

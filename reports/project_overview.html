@@ -384,7 +384,7 @@
           <tr>
             <td><code>tool</code></td>
             <td>Cần tra cứu dữ liệu.</td>
-            <td>Gọi mock tool, đánh giá kết quả, rồi trả lời.</td>
+            <td>Gọi tool đọc dữ liệu local, đánh giá kết quả, rồi trả lời.</td>
             <td>Please lookup order status for order 12345</td>
           </tr>
           <tr>
@@ -511,7 +511,58 @@
     </section>
 
     <section class="section">
-      <h2>6. Bonus đã hoàn thành</h2>
+      <h2>6. Mock grading questions</h2>
+      <p>
+        Bộ <code>data/sample/grading_questions.json</code> gồm 10 câu kiểm tra QA/RAG.
+        Hệ thống chạy trên corpus mock <code>data/sample/grading_corpus.json</code>,
+        kiểm tra top-1 document, nội dung bắt buộc phải có và nội dung không được xuất hiện.
+      </p>
+      <div class="grid cols-4">
+        <div class="metric">
+          <div class="label">Số câu grading</div>
+          <div class="value">10</div>
+          <div class="note">Refund, SLA, IT, HR, access control</div>
+        </div>
+        <div class="metric">
+          <div class="label">Success rate</div>
+          <div class="value">100%</div>
+          <div class="note">10/10 câu đạt tiêu chí</div>
+        </div>
+        <div class="metric">
+          <div class="label">Top-1 accuracy</div>
+          <div class="value">100%</div>
+          <div class="note">Truy xuất đúng doc mong đợi</div>
+        </div>
+        <div class="metric">
+          <div class="label">Required answer</div>
+          <div class="value">100%</div>
+          <div class="note">Đáp án chứa nội dung bắt buộc</div>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Question set</th>
+            <th>Input</th>
+            <th>Mock corpus</th>
+            <th>Metrics</th>
+            <th>Report</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Day 10 grading questions</td>
+            <td><code>data/sample/grading_questions.json</code></td>
+            <td><code>data/sample/grading_corpus.json</code></td>
+            <td><code>outputs/grading_questions_metrics.json</code></td>
+            <td><code>reports/grading_questions_report.md</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>7. Bonus đã hoàn thành</h2>
       <div class="grid cols-3">
         <div class="metric">
           <div class="label">Bonus 1</div>
@@ -532,8 +583,24 @@
     </section>
 
     <section class="section">
-      <h2>7. Báo cáo, log và file evidence nằm ở đâu?</h2>
+      <h2>8. Báo cáo, log và file evidence nằm ở đâu?</h2>
       <div class="file-list">
+        <div class="file-row">
+          <strong><code>data/sample/grading_questions.json</code></strong>
+          <span>Bộ mock grading questions người dùng yêu cầu chạy.</span>
+        </div>
+        <div class="file-row">
+          <strong><code>data/sample/grading_corpus.json</code></strong>
+          <span>Mock corpus có các doc_id kỳ vọng như policy_refund_v4, sla_p1_2026.</span>
+        </div>
+        <div class="file-row">
+          <strong><code>outputs/grading_questions_metrics.json</code></strong>
+          <span>Metrics cho 10 grading questions: success rate, top-1 accuracy, required answer rate.</span>
+        </div>
+        <div class="file-row">
+          <strong><code>reports/grading_questions_report.md</code></strong>
+          <span>Report markdown chi tiết từng câu hỏi, document truy xuất và câu trả lời.</span>
+        </div>
         <div class="file-row">
           <strong><code>data/support_records.json</code></strong>
           <span>Dataset local thật: orders, customers, incidents, policies dùng bởi tool.</span>
@@ -571,13 +638,18 @@
     </section>
 
     <section class="section">
-      <h2>8. Cách chạy demo</h2>
+      <h2>9. Cách chạy demo</h2>
       <div class="two-col">
         <div>
           <h3>Chạy test và sinh metrics</h3>
           <pre>python -m pytest
 python -m langgraph_agent_lab.cli run-scenarios --config configs/lab.yaml --output outputs/metrics.json
-python -m langgraph_agent_lab.cli validate-metrics --metrics outputs/metrics.json</pre>
+python -m langgraph_agent_lab.cli validate-metrics --metrics outputs/metrics.json
+python -m langgraph_agent_lab.cli run-grading-questions \
+  --questions data/sample/grading_questions.json \
+  --corpus data/sample/grading_corpus.json \
+  --output outputs/grading_questions_metrics.json \
+  --report reports/grading_questions_report.md</pre>
         </div>
         <div>
           <h3>Chạy UI</h3>
@@ -589,7 +661,7 @@ python -m langgraph_agent_lab.cli validate-metrics --metrics outputs/metrics.jso
     </section>
 
     <section class="section">
-      <h2>9. Kết luận</h2>
+      <h2>10. Kết luận</h2>
       <p>
         Project đã hoàn thành phần core requirements và có thêm bonus. Kết quả test hiện tại
         đạt 100% trên 7 scenario mẫu. Hệ thống có đủ routing, retry, approval, logging,

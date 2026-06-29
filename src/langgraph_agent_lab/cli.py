@@ -9,6 +9,7 @@ from typing import Annotated
 import typer
 import yaml
 
+from .grading import run_grading_questions, write_grading_metrics, write_grading_report
 from .graph import build_graph
 from .metrics import MetricsReport, metric_from_state, summarize_metrics, write_metrics
 from .persistence import build_checkpointer
@@ -66,6 +67,23 @@ def export_graph(output: Annotated[Path, typer.Option("--output")]) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(mermaid, encoding="utf-8")
     typer.echo(f"Wrote graph diagram to {output}")
+
+
+@app.command("run-grading-questions")
+def run_grading_question_set(
+    questions: Annotated[Path, typer.Option("--questions")],
+    corpus: Annotated[Path, typer.Option("--corpus")],
+    output: Annotated[Path, typer.Option("--output")],
+    report: Annotated[Path, typer.Option("--report")],
+) -> None:
+    """Run mock grading questions and render metrics/report."""
+    grading_report = run_grading_questions(questions, corpus)
+    write_grading_metrics(grading_report, output)
+    write_grading_report(grading_report, report)
+    typer.echo(
+        "Wrote grading metrics to "
+        f"{output}. success_rate={grading_report.success_rate:.2%}"
+    )
 
 
 if __name__ == "__main__":
