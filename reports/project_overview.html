@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LangGraph Agent Lab - Báo cáo tổng quan</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #17202a;
+      --muted: #657080;
+      --line: #dfe5ec;
+      --green: #147a4d;
+      --green-bg: #e8f7ef;
+      --blue: #155f9f;
+      --blue-bg: #e9f3ff;
+      --amber: #915f00;
+      --amber-bg: #fff4d9;
+      --red: #a93226;
+      --red-bg: #fdecea;
+      --slate: #334155;
+      --soft: #eef2f6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+
+    .hero {
+      padding: 28px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 34px;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 8px 0 0;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      max-width: 820px;
+      font-size: 16px;
+    }
+
+    .section {
+      margin-top: 18px;
+      padding: 24px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid.cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .metric {
+      padding: 16px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      min-height: 104px;
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .metric .value {
+      margin-top: 6px;
+      font-size: 28px;
+      font-weight: 750;
+    }
+
+    .metric .note {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .status.pass {
+      color: var(--green);
+      background: var(--green-bg);
+    }
+
+    .status.info {
+      color: var(--blue);
+      background: var(--blue-bg);
+    }
+
+    .status.warn {
+      color: var(--amber);
+      background: var(--amber-bg);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(120px, 1fr));
+      gap: 10px;
+      align-items: stretch;
+      margin-top: 14px;
+    }
+
+    .flow-step {
+      position: relative;
+      padding: 14px 12px;
+      min-height: 92px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .flow-step strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .flow-step span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--slate);
+      background: #f8fafc;
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    code {
+      padding: 2px 6px;
+      background: #eef2f6;
+      border-radius: 5px;
+      color: #1f2937;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    pre {
+      overflow-x: auto;
+      padding: 14px;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .check {
+      display: flex;
+      gap: 10px;
+      padding: 10px 12px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .check b {
+      color: var(--green);
+    }
+
+    .file-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .file-row {
+      padding: 11px 12px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .file-row strong {
+      display: block;
+    }
+
+    .file-row span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .grid.cols-4,
+      .grid.cols-3,
+      .two-col,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="status pass">Hoàn thành core + bonus</span>
+      <h1>LangGraph Agent Lab - Báo cáo dễ hiểu</h1>
+      <p class="subtitle">
+        File này tóm tắt project theo ngôn ngữ non-tech: hệ thống nhận ticket hỗ trợ,
+        phân loại bằng LLM, đi qua các nhánh xử lý phù hợp, ghi lại log, sinh thống kê
+        kiểm thử và có UI để demo.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>1. Kết quả tổng quan</h2>
+      <div class="grid cols-4">
+        <div class="metric">
+          <div class="label">Số kịch bản test</div>
+          <div class="value">7</div>
+          <div class="note">Đủ bộ sample scenarios</div>
+        </div>
+        <div class="metric">
+          <div class="label">Tỉ lệ thành công</div>
+          <div class="value">100%</div>
+          <div class="note">7/7 route đúng và có output</div>
+        </div>
+        <div class="metric">
+          <div class="label">Tổng retry</div>
+          <div class="value">3</div>
+          <div class="note">Dùng cho lỗi tạm thời</div>
+        </div>
+        <div class="metric">
+          <div class="label">Approval/HITL</div>
+          <div class="value">2</div>
+          <div class="note">Hai case risky cần phê duyệt</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>2. Hệ thống xử lý ticket như thế nào?</h2>
+      <p>
+        Mỗi ticket đi qua một graph gồm nhiều node. Node đầu tiên làm sạch input,
+        node tiếp theo dùng LLM để phân loại, sau đó hệ thống tự chọn nhánh xử lý.
+      </p>
+      <div class="flow">
+        <div class="flow-step">
+          <strong>1. Intake</strong>
+          <span>Nhận và chuẩn hóa câu hỏi của người dùng.</span>
+        </div>
+        <div class="flow-step">
+          <strong>2. Classify</strong>
+          <span>LLM phân loại: simple, tool, missing_info, risky, error.</span>
+        </div>
+        <div class="flow-step">
+          <strong>3. Route</strong>
+          <span>Chọn nhánh phù hợp dựa trên route vừa phân loại.</span>
+        </div>
+        <div class="flow-step">
+          <strong>4. Execute</strong>
+          <span>Trả lời trực tiếp, gọi tool, hỏi thêm thông tin hoặc xin approval.</span>
+        </div>
+        <div class="flow-step">
+          <strong>5. Evaluate</strong>
+          <span>Kiểm tra kết quả tool, retry nếu gặp lỗi tạm thời.</span>
+        </div>
+        <div class="flow-step">
+          <strong>6. Finalize</strong>
+          <span>Ghi audit event cuối cùng và kết thúc workflow.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>3. Các loại ticket hệ thống xử lý</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Route</th>
+            <th>Ý nghĩa</th>
+            <th>Cách xử lý</th>
+            <th>Ví dụ test</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>simple</code></td>
+            <td>Câu hỏi thông thường.</td>
+            <td>LLM tạo câu trả lời trực tiếp.</td>
+            <td>How do I reset my password?</td>
+          </tr>
+          <tr>
+            <td><code>tool</code></td>
+            <td>Cần tra cứu dữ liệu.</td>
+            <td>Gọi mock tool, đánh giá kết quả, rồi trả lời.</td>
+            <td>Please lookup order status for order 12345</td>
+          </tr>
+          <tr>
+            <td><code>missing_info</code></td>
+            <td>Câu hỏi quá mơ hồ.</td>
+            <td>Không đoán mò, hỏi lại thông tin cần bổ sung.</td>
+            <td>Can you fix it?</td>
+          </tr>
+          <tr>
+            <td><code>risky</code></td>
+            <td>Hành động có rủi ro hoặc side effect.</td>
+            <td>Chuẩn bị action, yêu cầu approval, rồi mới xử lý.</td>
+            <td>Refund customer, delete account, send email</td>
+          </tr>
+          <tr>
+            <td><code>error</code></td>
+            <td>Lỗi hệ thống hoặc timeout.</td>
+            <td>Retry có giới hạn, nếu hết lượt thì dead letter.</td>
+            <td>Timeout failure while processing request</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>4. Thống kê dữ liệu test</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Route mong đợi</th>
+            <th>Route thực tế</th>
+            <th>Kết quả</th>
+            <th>Số node đã đi qua</th>
+            <th>Retry</th>
+            <th>Approval</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>S01_simple</td>
+            <td>simple</td>
+            <td>simple</td>
+            <td><span class="status pass">Pass</span></td>
+            <td>4</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>S02_tool</td>
+            <td>tool</td>
+            <td>tool</td>
+            <td><span class="status pass">Pass</span></td>
+            <td>6</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>S03_missing</td>
+            <td>missing_info</td>
+            <td>missing_info</td>
+            <td><span class="status pass">Pass</span></td>
+            <td>4</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>S04_risky</td>
+            <td>risky</td>
+            <td>risky</td>
+            <td><span class="status pass">Pass</span></td>
+            <td>8</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>S05_error</td>
+            <td>error</td>
+            <td>error</td>
+            <td><span class="status pass">Pass</span></td>
+            <td>10</td>
+            <td>2</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>S06_delete</td>
+            <td>risky</td>
+            <td>risky</td>
+            <td><span class="status pass">Pass</span></td>
+            <td>8</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>S07_dead_letter</td>
+            <td>error</td>
+            <td>error</td>
+            <td><span class="status pass">Pass</span></td>
+            <td>5</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Trung bình mỗi scenario đi qua <strong>6.43 node</strong>. Các case lỗi đã chứng minh
+        retry loop hoạt động; các case risky đã chứng minh approval path hoạt động.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>5. Những phần đã làm trong project</h2>
+      <div class="checklist">
+        <div class="check"><b>✓</b><span>Hoàn thiện state schema: route, risk, retry, evaluation, approval, logs.</span></div>
+        <div class="check"><b>✓</b><span>Hoàn thiện toàn bộ node xử lý: classify, tool, evaluate, answer, clarify, approval, retry, dead letter, finalize.</span></div>
+        <div class="check"><b>✓</b><span>LLM integration: phân loại bằng structured output và sinh câu trả lời bằng LLM.</span></div>
+        <div class="check"><b>✓</b><span>Graph wiring: mọi route đều đi tới finalize và kết thúc đúng.</span></div>
+        <div class="check"><b>✓</b><span>Retry loop có giới hạn, tránh vòng lặp vô hạn.</span></div>
+        <div class="check"><b>✓</b><span>HITL approval path cho các hành động risky.</span></div>
+        <div class="check"><b>✓</b><span>Metrics JSON, report markdown và HTML summary cho người đọc non-tech.</span></div>
+        <div class="check"><b>✓</b><span>Bonus: SQLite checkpoint, Mermaid graph export, Streamlit UI.</span></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>6. Bonus đã hoàn thành</h2>
+      <div class="grid cols-3">
+        <div class="metric">
+          <div class="label">Bonus 1</div>
+          <div class="value">SQLite</div>
+          <div class="note">Checkpoint có thể lưu vào database SQLite.</div>
+        </div>
+        <div class="metric">
+          <div class="label">Bonus 2</div>
+          <div class="value">Diagram</div>
+          <div class="note">Graph Mermaid export ở <code>outputs/graph.mmd</code>.</div>
+        </div>
+        <div class="metric">
+          <div class="label">Bonus 3</div>
+          <div class="value">UI</div>
+          <div class="note">Streamlit UI chạy ở <code>http://127.0.0.1:8501</code>.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>7. Báo cáo, log và file evidence nằm ở đâu?</h2>
+      <div class="file-list">
+        <div class="file-row">
+          <strong><code>outputs/metrics.json</code></strong>
+          <span>Dữ liệu thống kê test: success rate, retries, approvals, route từng scenario.</span>
+        </div>
+        <div class="file-row">
+          <strong><code>reports/lab_report.md</code></strong>
+          <span>Báo cáo markdown theo rubric: kiến trúc, schema, metrics, failure analysis, bonus.</span>
+        </div>
+        <div class="file-row">
+          <strong><code>reports/project_overview.html</code></strong>
+          <span>File HTML này, dành cho người không chuyên đọc nhanh toàn bộ project.</span>
+        </div>
+        <div class="file-row">
+          <strong><code>outputs/graph.mmd</code></strong>
+          <span>Mermaid diagram thể hiện toàn bộ graph và các route.</span>
+        </div>
+        <div class="file-row">
+          <strong><code>app.py</code></strong>
+          <span>Streamlit UI để nhập ticket, approve/reject risky action và xem trace.</span>
+        </div>
+      </div>
+      <p>
+        Log runtime được lưu trong state qua các field append-only như <code>events</code>,
+        <code>messages</code>, <code>tool_results</code> và <code>errors</code>. UI hiển thị
+        các log này trong tab Trace, Tool results và Raw state.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>8. Cách chạy demo</h2>
+      <div class="two-col">
+        <div>
+          <h3>Chạy test và sinh metrics</h3>
+          <pre>python -m pytest
+python -m langgraph_agent_lab.cli run-scenarios --config configs/lab.yaml --output outputs/metrics.json
+python -m langgraph_agent_lab.cli validate-metrics --metrics outputs/metrics.json</pre>
+        </div>
+        <div>
+          <h3>Chạy UI</h3>
+          <pre>streamlit run app.py --server.address 127.0.0.1 --server.port 8501</pre>
+          <p>Sau đó mở <code>http://127.0.0.1:8501</code> trong trình duyệt.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>9. Kết luận</h2>
+      <p>
+        Project đã hoàn thành phần core requirements và có thêm bonus. Kết quả test hiện tại
+        đạt 100% trên 7 scenario mẫu. Hệ thống có đủ routing, retry, approval, logging,
+        metrics, report, diagram và UI demo.
+      </p>
+    </section>
+
+    <div class="footer">
+      Generated for Day 08 LangGraph Agent Lab - local workspace report.
+    </div>
+  </main>
+</body>
+</html>

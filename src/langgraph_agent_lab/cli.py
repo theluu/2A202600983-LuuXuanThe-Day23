@@ -34,7 +34,13 @@ def run_scenarios(
         state = initial_state(scenario)
         run_config = {"configurable": {"thread_id": state["thread_id"]}}
         final_state = graph.invoke(state, config=run_config)
-        metrics.append(metric_from_state(final_state, scenario.expected_route.value, scenario.requires_approval))
+        metrics.append(
+            metric_from_state(
+                final_state,
+                scenario.expected_route.value,
+                scenario.requires_approval,
+            )
+        )
     report = summarize_metrics(metrics)
     write_metrics(report, output)
     if cfg.get("report_path"):
@@ -50,6 +56,16 @@ def validate_metrics(metrics: Annotated[Path, typer.Option("--metrics")]) -> Non
     if report.total_scenarios < 6:
         raise typer.BadParameter("Expected at least 6 scenarios")
     typer.echo(f"Metrics valid. success_rate={report.success_rate:.2%}")
+
+
+@app.command("export-graph")
+def export_graph(output: Annotated[Path, typer.Option("--output")]) -> None:
+    """Export the compiled graph as a Mermaid diagram for bonus evidence."""
+    graph = build_graph(checkpointer=None)
+    mermaid = graph.get_graph().draw_mermaid()
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(mermaid, encoding="utf-8")
+    typer.echo(f"Wrote graph diagram to {output}")
 
 
 if __name__ == "__main__":
